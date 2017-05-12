@@ -1,3 +1,4 @@
+// Dependencies
 let express = require('express')
 let app = express()
 let path = require('path')
@@ -6,19 +7,19 @@ let mongoose = require('mongoose')
 let db = mongoose.connection
 let api = require('./lib/routes/api')
 
-// Dev DB
-mongoose.connect('mongodb://localhost:27017/activoter')
+// DB Config
+const DEV_DB = 'mongodb://localhost:27017/activoter'
+let mongodbUri = process.env.MONGODB_URI || DEV_DB,
+
+mongoose.connect(mongodbUri)
 
 db.on('error', console.error.bind(console, 'connection error:'))
+
 db.once('open', function() {
   console.log('DB connected')
 })
 
-// Prod DB
-// let mongodbUri = '',
-// mongoose.connect(mongodbUri);
-
-// Config
+// API Config
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(express.static(__dirname))
