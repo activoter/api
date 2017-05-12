@@ -9,7 +9,7 @@ let api = require('./lib/routes/api')
 
 // DB Config
 const DEV_DB = 'mongodb://localhost:27017/activoter'
-let mongodbUri = process.env.MONGODB_URI || DEV_DB,
+let mongodbUri = process.env.MONGODB_URI || DEV_DB
 
 mongoose.connect(mongodbUri)
 
