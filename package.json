@@ -1,0 +1,33 @@
+{
+  "name": "activoter",
+  "version": "1.0.0",
+  "description": "Political action platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "politics",
+    "vote",
+    "government"
+  ],
+  "author": "Richard Smith",
+  "license": "ISC",
+  "engines": {
+    "node": "7.2.1",
+    "npm": "3.10.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mongoose": "^4.9.7",
+    "node-restful": "^0.2.6",
+    "passport": "^0.3.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
