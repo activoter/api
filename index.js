@@ -24,7 +24,7 @@ app.use('/', api)
 
 // Root
 app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname + '/lib/index.html'))
+	res.sendFile(path.join(__dirname + '/public/index.html'))
 })
 
 // Startup
