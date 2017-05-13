@@ -1,6 +1,5 @@
 * {
 	font-weight: 300;
-	transition: 0.25s;
 }
 body {
 	background-image: url('../images/bg-mt_rushmore-blue.jpg');
@@ -16,6 +15,7 @@ a {
 	text-transform: uppercase;
 	color: #444;
 	text-decoration: none;
+	transition: 0.25s;
 }
 a:hover {
 	color: rgb(41, 171, 226);
