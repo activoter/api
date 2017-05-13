@@ -12,14 +12,8 @@ const TEST_DB = 'mongodb://localhost:27017/activoter'
 let dbUri = process.env.MONGODB_URI || process.env.MONGOHQ_URL || TEST_DB
 
 mongoose.connect(dbUri, (err, data) => {
-	if (err) console.log (`ERROR connecting to: ${dbUri}. ${err}`)
+	if (err) console.log (`Error connecting to: ${dbUri}. ${err}`)
 	console.log (`Succeeded connected to: ${dbUri}`);
-})
-
-db.on('error', console.error.bind(console, 'connection error:'))
-
-db.once('open', function() {
-  console.log('DB connected')
 })
 
 // API Config
@@ -36,5 +30,5 @@ app.get('/', (req, res) => {
 // Startup
 let port = process.env.PORT || 9999
 app.listen(port, () => {
-	console.log('Listening on Port ' + port)	
+	console.log('App running on: Port ' + port)	
 })
