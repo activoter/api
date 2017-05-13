@@ -8,7 +8,7 @@ let db = mongoose.connection
 let api = require('./lib/routes/api')
 
 // DB Config
-const TEST_DB = 'mongodb://localhost/activoter'
+const TEST_DB = 'mongodb://localhost:27017/activoter'
 let dbUri = process.env.MONGODB_URI || process.env.MONGOHQ_URL || TEST_DB
 
 mongoose.connect(dbUri, (err, data) => {
