@@ -27,7 +27,8 @@ a.button {
 	font-weight: 400;
 	display: inline-block;
 	box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
-	transition: 0.3s;
+	transition-property: background;
+	transition-duration: 0.3s;
 }
 a.button:hover {
 	background: rgb(41, 171, 226);
