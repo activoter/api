@@ -5,7 +5,7 @@
 body {
 	background-image: url('../images/bg-mt_rushmore-blue.jpg');
 	background-repeat: no-repeat;
-	background-color: rgb(41, 171, 226);
+	background-color: #444;
 	background-size: cover;
 	color: #444;
 	margin: 0;
@@ -24,15 +24,15 @@ a.button {
 	background: #fff;
 	padding: 10px;
 	border-radius: 3px;
+	font-weight: 400;
 	display: inline-block;
-	box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
-	transition: 0.25s;
+	box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+	transition: 0.3s;
 }
 a.button:hover {
 	background: rgb(41, 171, 226);
 	color: #fff;
-	font-weight: 400;
-	box-shadow: 0px 0px 0px 2px rgb(41, 171, 226);
+	box-shadow: 0px 0px 0px 1px rgb(41, 171, 226);
 }
 .box {
 	background: rgba(255, 255, 255, 0.8);
