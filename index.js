@@ -16,14 +16,26 @@ mongoose.connect(dbUri, (err, data) => {
 	console.log (`Succeeded connected to: ${dbUri}`);
 })
 
-// API Config
+// CORS settings
+let allowCrossDomain = (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+	if (req.method == 'OPTIONS') {
+		res.send(200)
+	} else {
+		next()
+    }
+}
+
+// App config
 app.use(allowCrossDomain)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname))
 app.use('/', api)
 
-// Root
+// Home route
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname + '/public/index.html'))
 })
