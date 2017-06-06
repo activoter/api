@@ -3,22 +3,24 @@ let express = require('express')
 let app = express()
 let path = require('path')
 let bodyParser = require('body-parser')
-let passport = require('passport')
 let cookieSession = require('cookie-session')
 let cookieParser = require('cookie-parser')
-let LocalStrategy = require('passport-local').Strategy
-let mongoose = require('mongoose')
-let db = mongoose.connection
 let api = require('./lib/routes/api')
 
-// DB Config
-const TEST_DB = 'mongodb://localhost:27017/activoter'
-let dbUri = process.env.MONGODB_URI || process.env.MONGOHQ_URL || TEST_DB
+// Database
+let mongoose = require('mongoose')
+let db = mongoose.connection
+let dbConfig = require('./config/database')
+let dbURI = process.env.MONGODB_URI || process.env.MONGOHQ_URL || dbConfig.test
 
-mongoose.connect(dbUri, (err, data) => {
-	if (err) console.log (`Error connecting to: ${dbUri}. ${err}`)
-	console.log (`Succeeded connected to: ${dbUri}`);
+mongoose.connect(dbURI, (err, data) => {
+	if (err) console.log (`Error connecting to: ${dbURI}. ${err}`)
+	console.log (`Succeeded connected to: ${dbURI}`);
 })
+
+// Auth
+let passport = require('passport')
+require('./config/passport')(passport)
 
 // CORS settings
 let allowCrossDomain = (req, res, next) => {
@@ -32,7 +34,7 @@ let allowCrossDomain = (req, res, next) => {
     }
 }
 
-// App config
+// Express config
 app.use(allowCrossDomain)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -47,46 +49,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use('/', api)
 
-passport.use(new LocalStrategy((email, password, done) => {
-	User.findOne({ email: email }, (err, user) => {
-		if (err) return done(err)
-		if (!user) {
-			return done(null, false, { message: 'Incorrect email.' })
-		}
-		if (!user.validPassword(password)) {
-			return done(null, false, { message: 'Incorrect password.' })
-		}
-		return done(null, user)
-	})
-}))
-
-passport.serializeUser(function(user, done) {
-	done(null, user._id)
-})
-
-passport.deserializeUser(function(id, done) {
-	User.findById(id, function(err, user) {
-		done(err, user)
-	})
-})
-
-// Home route
-app.get('/', (req, res) => {
+// Routes
+app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/public/index.html'))
 })
-
-// Login
-app.post(
-	'/login',
-	passport.authenticate(
-		'local',
-		{
-			successRedirect: '/',
-			failureRedirect: '/login',
-			failureFlash: false
-		}
-	)
-)
+require('./lib/routes')(app, passport)
 
 // Startup
 let port = process.env.PORT || 9999
