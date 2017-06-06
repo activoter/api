@@ -6,6 +6,7 @@ let bodyParser = require('body-parser')
 let cookieSession = require('cookie-session')
 let cookieParser = require('cookie-parser')
 let api = require('./lib/routes/api')
+let cors = require('./config/cors')
 
 // Database
 let mongoose = require('mongoose')
@@ -22,20 +23,8 @@ mongoose.connect(dbURI, (err, data) => {
 let passport = require('passport')
 require('./config/passport')(passport)
 
-// CORS settings
-let allowCrossDomain = (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
-	if (req.method == 'OPTIONS') {
-		res.send(200)
-	} else {
-		next()
-    }
-}
-
 // Express config
-app.use(allowCrossDomain)
+app.use(cors)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname))
@@ -50,7 +39,7 @@ app.use(passport.session())
 app.use('/', api)
 
 // Routes
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname + '/public/index.html'))
 })
 require('./lib/routes')(app, passport)
